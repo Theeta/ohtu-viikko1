@@ -37,6 +37,33 @@ public class VarastoTest {
         // saldon pitäisi olla sama kun lisätty määrä
         assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
     }
+    
+    @Test
+    public void negatiivinenLisaysEiMuutaSaldoa() {
+        varasto.lisaaVarastoon(8);
+        varasto.lisaaVarastoon(-2);
+
+        // saldon pitäisi olla sama kun ensin lisätty määrä
+        assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void lisaysOnnistuuJosVarastoTuleeTayteen() {
+        varasto.lisaaVarastoon(8);
+        varasto.lisaaVarastoon(2);
+
+        // saldon pitäisi olla sama kun ensin lisätty määrä
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void varastoaEiVoiTayttaaYliMaksimitilavuuden() {
+        varasto.lisaaVarastoon(8);
+        varasto.lisaaVarastoon(5);
+
+        // saldon pitäisi olla sama kun ensin lisätty määrä
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
 
     @Test
     public void lisaysLisaaPienentaaVapaataTilaa() {
@@ -53,6 +80,24 @@ public class VarastoTest {
         double saatuMaara = varasto.otaVarastosta(2);
 
         assertEquals(2, saatuMaara, vertailuTarkkuus);
+    }
+    
+    @Test
+    public void ottaminenPalauttaaKaikenMitaVastostaLoytyyJosYritetaanOttaaLiikaa() {
+        varasto.lisaaVarastoon(3);
+
+        double saatuMaara = varasto.otaVarastosta(5);
+
+        assertEquals(3, saatuMaara, vertailuTarkkuus);
+    }
+    
+    @Test
+    public void negatiivinenOttoEiPienennaMaaraa() {
+        varasto.lisaaVarastoon(8);
+
+        varasto.otaVarastosta(-2);
+
+        assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
     }
 
     @Test
